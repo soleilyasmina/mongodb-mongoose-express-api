@@ -104,3 +104,10 @@ mongo
 > use productsDatabase
 > db.products.find()
 ```
+
+Create a .gitignore file `touch .gitignore`!
+
+```sh
+/node_modules
+.DS_Store
+```
