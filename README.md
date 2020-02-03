@@ -134,6 +134,8 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);
 });
@@ -154,14 +156,14 @@ Awesome! Next we want to be able to access our Product model from within the mod
 Add the following to the top of your server.js file:
 
 ```js
-const { Product } = require('./models');
+const Product = require('./models/product');
 ```
 
 Let's create the route to show all products:
 
 ```js
 app.get('/products', async (req, res) => {
-    const products = await Product.findAll()
+    const products = await Product.find()
     res.json(products)
 })
 ```
