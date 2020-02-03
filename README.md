@@ -11,9 +11,9 @@ Let's start!
 
 ```sh
 cd express-mongo-api
-npm init -y && npm install mongoose express
+npm init -y && npm install mongoose
 mkdir db models seed
-touch db/index.js models/product.js seed/products.js server.js
+touch db/index.js models/product.js seed/products.js
 ```
 
 Now let's open up Visual Studio Code and write some code:
@@ -111,3 +111,120 @@ Create a .gitignore file `touch .gitignore`!
 /node_modules
 .DS_Store
 ```
+
+Cool, enough Mongoose. Now, Express. Let's install Express:
+
+```sh
+npm install express
+```
+And now let's create our Express boilerplate:
+
+```sh
+touch server.js
+```
+
+Add the code:
+
+```js
+const express = require('express');
+const PORT = process.env.PORT || 3000;
+
+const app = express();
+
+app.listen(PORT, () => {
+  console.log(`Express server listening on port ${PORT}`);
+});
+
+app.get('/', (req, res) => {
+  res.send("This is root!");
+});
+```
+
+Let's make sure our server works:
+
+```sh
+node server.js
+open localhost:3000
+```
+
+Awesome! Next we want to be able to access our Product model from within the models folder.
+Add the following to the top of your server.js file:
+
+```js
+const { Product } = require('./models');
+```
+
+Let's create the route to show all products:
+
+```js
+app.get('/products', async (req, res) => {
+    const products = await Product.findAll()
+    res.json(products)
+})
+```
+
+Restart the server and test the route:
+
+```sh
+node server.js
+```
+
+Try it in your browser: http://localhost:3000/products
+
+Now I would like to see a specific product.
+Let's say you type http://localhost:3000/products/2 then our API should respond with the product where id equals 2. Express let's us do this via the `req.params` object:
+
+```js
+app.get('/products/:id', async (req, res) => {
+  const { id } = req.params
+  const product = await Product.findById(id)
+  res.json(product)
+})
+```
+
+What if the product does not exist in the database? We would get an ugly error message. We can handle this by using a try/catch block:
+
+```js
+app.get('/products/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        const product = await Product.findByPk(id)
+        if (!product) throw Error('Product not found')
+        res.json(product)
+    } catch (e) {
+        console.log(e)
+        res.send('Product not found!')
+    }
+})
+```
+
+Does it work? Restart the server and test the route.
+
+```sh
+node server.js
+```
+
+Open http://localhost:3000/products/2 in your browser.
+
+Restarting the server can be a pain! Let's fix this by installing [nodemon](https://nodemon.io)!
+
+```sh
+npm install nodemon --save-dev
+```
+
+Modify your package.json file:
+
+```js
+....
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+....
+```
+
+Now run `npm start` and nodemon will watch for changes to your JavaScript files and restart your server :)
+
+Success!
+
+![](http://www.winsold.com/sites/all/modules/winsold/images/checkmark.svg)
