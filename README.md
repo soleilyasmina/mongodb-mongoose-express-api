@@ -92,7 +92,7 @@ const run = async () => {
 run()
 ```
 
-Awesome, so this users "seed" file above is a script that, once executed, connects to the Mongo database and creates 7 products in the products collection.
+Awesome, so this products "seed" file above is a script that, once executed, connects to the Mongo database and creates 7 products in the products collection.
 
 Let's execute our products seed file:
 
