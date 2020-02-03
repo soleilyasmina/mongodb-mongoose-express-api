@@ -177,7 +177,7 @@ node server.js
 Try it in your browser: http://localhost:3000/products
 
 Now I would like to see a specific product.
-Let's say you type http://localhost:3000/products/2 then our API should respond with the product where id equals 2. Express let's us do this via the `req.params` object:
+Let's say you type http://localhost:3000/products/5e385d110909f66c6404fbc9 then our API should respond with the product where id equals 2. Express let's us do this via the `req.params` object:
 
 ```js
 app.get('/products/:id', async (req, res) => {
@@ -209,7 +209,7 @@ Does it work? Restart the server and test the route.
 node server.js
 ```
 
-Open http://localhost:3000/products/2 in your browser.
+Open http://localhost:3000/products/5e385d110909f66c6404fbc9 in your browser.
 
 Restarting the server can be a pain! Let's fix this by installing [nodemon](https://nodemon.io)!
 
