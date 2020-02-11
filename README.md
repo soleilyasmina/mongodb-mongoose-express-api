@@ -7,6 +7,52 @@
 
 # MongoDB, Mongoose, and Express: Building an API
 
+## First! Database Design
+
+So we are going to build an express api for products. 
+The constraints are that a product has a title, a description, a price, brand name and a brand url.
+
+How should we design our data model? Perhaps this way:
+
+```js
+const Product = new Schema(
+    {
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        price: { type: String, required: true },
+        brand_name: { type: String, required: true },
+        brand_url: { type: String, required: true }
+    },
+    { timestamps: true },
+)
+```
+
+Well, if we create one product model what we will notice quickly is that the brand name and brand url fields will repeat themselves, for example if we have 300 New Balance shoes in our database, we will repeat "New Balance" and "https://www.newbalance.com" 300 times! There is a better way by moving brand to its own model and have the product model refer to the brand model like this:
+
+```js
+const Product = new Schema(
+    {
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        price: { type: String, required: true },
+        brand: { type: Schema.Types.ObjectId, ref: 'brands' }
+    },
+    { timestamps: true },
+)
+```
+
+```js
+const Brand = new Schema(
+    {
+        name: { type: String, required: true },
+        url: { type: String, required: true }
+    },
+    { timestamps: true },
+)
+```
+
+Awsome! Now that we have our data model design 100% let's jump into coding this app!
+
 Let's start!
 
 ```sh
