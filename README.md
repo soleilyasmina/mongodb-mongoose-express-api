@@ -10,7 +10,7 @@
 Let's start!
 
 ```sh
-cd express-mongo-api
+cd mongodb-mongoose-express-api
 npm init -y && npm install mongoose
 mkdir db models seed
 touch db/index.js models/product.js seed/products.js
