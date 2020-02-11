@@ -314,7 +314,14 @@ Modify your package.json file:
 
 Now run `npm start` and nodemon will watch for changes to your JavaScript files and restart your server :)
 
-Success!
+## Exercise
+
+Create the following Express routes for Brands:
+
+- http://localhost:3000/brands
+- http://localhost:3000/brands/9e385d110909f66c6404ebs7
+
+**Success!**
 
 ![](http://www.winsold.com/sites/all/modules/winsold/images/checkmark.svg)
 
