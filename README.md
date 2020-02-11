@@ -27,6 +27,8 @@ const Product = new Schema(
 )
 ```
 
+> Note: There is a more efficient way of modeling data than the above
+
 Well, if we create one product model what we will notice quickly is that the brand name and brand url fields will repeat themselves, for example if we have 300 New Balance shoes in our database, we will repeat "New Balance" and "https://www.newbalance.com" 300 times! There is a better way by moving brand to its own model and have the product model refer to the brand model like this:
 
 ```js
