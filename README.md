@@ -5,7 +5,7 @@
 1. Fork
 1. Clone
 
-# Express, Mongoose, & MongoDB
+# MongoDB, Mongoose, and Express: Building an API
 
 Let's start!
 
