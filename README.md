@@ -51,7 +51,7 @@ const Brand = new Schema(
 )
 ```
 
-Now we create a brand only once (not 300 times) and have the product model reference it via the brand id.
+Now we create a brand only once (not 300 times) and have the product model reference it via the brand id. This is a more elegant approach.
 
 Awesome! Now that we have our data model design 100% let's jump into coding this app!
 
