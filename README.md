@@ -63,7 +63,7 @@ Let's start!
 cd mongodb-mongoose-express-api
 npm init -y && npm install mongoose
 mkdir db models seed
-touch db/index.js models/{brand product}.js seed/brandsProducts.js
+touch db/index.js models/{brand,product}.js seed/brandsProducts.js
 ```
 
 Now let's open up Visual Studio Code and write some code:
@@ -217,6 +217,7 @@ mongodb-mongoose-express-api/server.js
 ```js
 const express = require('express');
 const PORT = process.env.PORT || 3000;
+const db = require("./db/index")
 
 const app = express();
 
