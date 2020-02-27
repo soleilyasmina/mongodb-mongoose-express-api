@@ -2,12 +2,13 @@
 
 # Required fields: unit, section and type
 
-unit: (unit here)
+unit: 3
 
-section: (section here)
+section: mongoDb,express
 
-type: (type here)
+type: lesson
 
+notes: mongodb,mongoose,express
 
 # optional fields:
   # notes
