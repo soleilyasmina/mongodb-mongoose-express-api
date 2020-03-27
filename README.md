@@ -79,7 +79,7 @@ mongodb-mongoose-express-api/db/index.js
 const mongoose = require('mongoose')
 
 mongoose
-    .connect('mongodb://127.0.0.1:27017/productsDatabase', { useUnifiedTopology: true, useNewUrlParser: true })
+    .connect('mongodb://127.0.0.1:27017/productsBrandsDatabase', { useUnifiedTopology: true, useNewUrlParser: true })
     .then(() => {
         console.log('Successfully connected to MongoDB.');
       })
