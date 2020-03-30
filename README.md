@@ -5,6 +5,14 @@
 1. Fork
 1. Clone
 
+## Learning Objectives
+
+By the end of this, developers should be able to:
+
+- Understand the difference between MongoDB and Express
+- Understand the function of an API
+- Build an API in JavaScript
+
 # MongoDB, Mongoose, and Express: Building an API
 
 ## First! Database Design
