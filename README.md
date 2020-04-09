@@ -148,20 +148,20 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 const main = async () => {
 
-    const brand1 = await new Brand({ name: 'Apple', url: 'https://www.apple.com' })
-    brand1.save()
+    const brand1 = new Brand({ name: 'Apple', url: 'https://www.apple.com' })
+    await brand1.save()
 
-    const brand2 = await new Brand({ name: 'Vespa', url: 'https://www.vespa.com' })
-    brand2.save()
+    const brand2 = new Brand({ name: 'Vespa', url: 'https://www.vespa.com' })
+    await brand2.save()
 
-    const brand3 = await new Brand({ name: 'New Balance', url: 'https://www.newbalance.com' })
-    brand3.save()
+    const brand3 = new Brand({ name: 'New Balance', url: 'https://www.newbalance.com' })
+    await brand3.save()
 
-    const brand4 = await new Brand({ name: 'Tribe', url: 'https://www.tribebicycles.com' })
-    brand4.save()
+    const brand4 = new Brand({ name: 'Tribe', url: 'https://www.tribebicycles.com' })
+    await brand4.save()
 
-    const brand5 = await new Brand({ name: 'Stumptown', url: 'https://www.stumptowncoffee.com' })
-    brand5.save()
+    const brand5 = new Brand({ name: 'Stumptown', url: 'https://www.stumptowncoffee.com' })
+    await brand5.save()
 
     const products = [
         { title: 'Apple AirPods', description: 'https://www.apple.com/airpods', price: '250', brand: brand1._id },
