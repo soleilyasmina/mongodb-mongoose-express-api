@@ -197,7 +197,7 @@ So how do we know if it worked? We could drop into the `mongo` interactive shell
 
 ```sh
 mongo
-> use productsDatabase
+> use productsBrandsDatabase
 > db.products.find()
 ```
 
