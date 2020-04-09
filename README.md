@@ -318,12 +318,13 @@ Modify your package.json file:
 ....
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
 ....
 ```
 
-Now run `npm start` and nodemon will watch for changes to your JavaScript files and restart your server :)
+Now run `npm run dev` and nodemon will watch for changes to your JavaScript files and restart your server :)
 
 ## Exercise
 
