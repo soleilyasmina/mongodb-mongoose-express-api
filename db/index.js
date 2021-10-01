@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
+// set up connection URI to use PROD_MONGODB from env or our local connection URI
+const MONGODB_URI = process.env.PROD_MONGODB || "mongodb://127.0.0.1:27017/productsBrandsDatabase";
+
 mongoose
-  .connect("mongodb://127.0.0.1:27017/productsBrandsDatabase")
+  .connect(MONGODB_URI)
   .then(() => console.log("Connected to MongoDB! 🚀"))
   .catch((e) => console.error("MongoDB connection error:", e.message));
 
