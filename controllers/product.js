@@ -12,7 +12,7 @@ const getProducts = async (req, res) => {
 const getBrandProducts = async (req, res) => {
   try {
     const { brand_id } = req.params;
-    const brandProducts = await Product.find({ brand_id });
+    const brandProducts = await Product.find({ brand: brand_id });
     res.json(brandProducts);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -22,7 +22,7 @@ const getBrandProducts = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { brand_id } = req.params;
-    const product = new Product({ ...req.body, brand_id });
+    const product = new Product({ ...req.body, brand: brand_id });
     await product.save();
     res.status(201).json(product);
   } catch (e) {
