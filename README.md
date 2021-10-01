@@ -80,14 +80,14 @@ Now let's open up Visual Studio Code and write some code:
 code .
 ```
 
-Inside our `db` folder we are going to use Mongoose to establish a connection to our MongoDB `productsDatabase`:
+Inside our `db` folder we are going to use Mongoose to establish a connection to our MongoDB `productsBrandsDatabase`:
 
 mongodb-mongoose-express-api/db/index.js
 ```js
 const mongoose = require('mongoose')
 
 mongoose
-    .connect('mongodb://127.0.0.1:27017/productsBrandsDatabase', { useUnifiedTopology: true, useNewUrlParser: true })
+    .connect('mongodb://127.0.0.1:27017/productsBrandsDatabase')
     .then(() => {
         console.log('Successfully connected to MongoDB.');
       })
@@ -97,6 +97,8 @@ mongoose
 // mongoose.set('debug', true)
 const db = mongoose.connection
 
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
 module.exports = db
 ```
 
@@ -104,10 +106,9 @@ Let's create our brand model:
 
 mongodb-mongoose-express-api/models/brand.js
 ```js
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const { Schema, model } = require('mongoose')
 
-const Brand = new Schema(
+const brandSchema = new Schema(
     {
         name: { type: String, required: true },
         url: { type: String, required: true }
@@ -115,17 +116,16 @@ const Brand = new Schema(
     { timestamps: true },
 )
 
-module.exports = mongoose.model('brands', Brand)
+module.exports = model('Brand', brandSchema)
 ```
 
 Now we can create our product model:
 
 mongodb-mongoose-express-api/models/product.js
 ```js
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const { Schema, model } = require('mongoose')
 
-const Product = new Schema(
+const productSchema = new Schema(
     {
         title: { type: String, required: true },
         description: { type: String, required: true },
@@ -135,7 +135,7 @@ const Product = new Schema(
     { timestamps: true },
 )
 
-module.exports = mongoose.model('products', Product)
+module.exports = model('Product', productSchema)
 ```
 
 mongodb-mongoose-express-api/seed/brandsProducts.js
@@ -144,33 +144,31 @@ const db = require('../db')
 const Brand = require('../models/brand')
 const Product = require('../models/product')
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'))
-
 const main = async () => {
 
-    const brand1 = new Brand({ name: 'Apple', url: 'https://www.apple.com' })
-    await brand1.save()
+    const appleBrand = new Brand({ name: 'Apple', url: 'https://www.apple.com' })
+    await appleBrand.save()
 
-    const brand2 = new Brand({ name: 'Vespa', url: 'https://www.vespa.com' })
-    await brand2.save()
+    const vespaBrand = new Brand({ name: 'Vespa', url: 'https://www.vespa.com' })
+    await vespaBrand.save()
 
-    const brand3 = new Brand({ name: 'New Balance', url: 'https://www.newbalance.com' })
-    await brand3.save()
+    const newBalanceBrand = new Brand({ name: 'New Balance', url: 'https://www.newbalance.com' })
+    await newBalanceBrand.save()
 
-    const brand4 = new Brand({ name: 'Tribe', url: 'https://www.tribebicycles.com' })
-    await brand4.save()
+    const tribeBicyclesBrand = new Brand({ name: 'Tribe', url: 'https://www.tribebicycles.com' })
+    await tribeBicyclesBrand.save()
 
-    const brand5 = new Brand({ name: 'Stumptown', url: 'https://www.stumptowncoffee.com' })
-    await brand5.save()
+    const stumptownBrand = new Brand({ name: 'Stumptown', url: 'https://www.stumptowncoffee.com' })
+    await stumptownBrand.save()
 
     const products = [
-        { title: 'Apple AirPods', description: 'https://www.apple.com/airpods', price: '250', brand: brand1._id },
-        { title: 'Apple iPhone Pro', description: 'https://www.apple.com/iphone-11-pro', price: '1000', brand: brand1._id },
-        { title: 'Apple Watch', description: 'https://www.apple.com/watch', price: '499', brand: brand1._id },
-        { title: 'Vespa Primavera', description: 'https://www.vespa.com/us_EN/vespa-models/primavera.html', price: '3000', brand: brand2._id },
-        { title: 'New Balance 574 Core', description: 'https://www.newbalance.com/pd/574-core/ML574-EG.html', price: '84', brand: brand3._id },
-        { title: 'Tribe Messenger Bike 004', description: 'https://tribebicycles.com/collections/messenger-series/products/mess-004-tx', price: '675', brand: brand4._id },
-        { title: 'Stumptown Hair Bender Coffee', description: 'https://www.stumptowncoffee.com/products/hair-bender', price: '17', brand: brand5._id }
+        { title: 'Apple AirPods', description: 'https://www.apple.com/airpods', price: '250', brand: appleBrand._id },
+        { title: 'Apple iPhone Pro', description: 'https://www.apple.com/iphone-11-pro', price: '1000', brand: appleBrand._id },
+        { title: 'Apple Watch', description: 'https://www.apple.com/watch', price: '499', brand: appleBrand._id },
+        { title: 'Vespa Primavera', description: 'https://www.vespa.com/us_EN/vespa-models/primavera.html', price: '3000', brand: vespaBrand._id },
+        { title: 'New Balance 574 Core', description: 'https://www.newbalance.com/pd/574-core/ML574-EG.html', price: '84', brand: newBalanceBrand._id },
+        { title: 'Tribe Messenger Bike 004', description: 'https://tribebicycles.com/collections/messenger-series/products/mess-004-tx', price: '675', brand: tribeBicyclesBrand._id },
+        { title: 'Stumptown Hair Bender Coffee', description: 'https://www.stumptowncoffee.com/products/hair-bender', price: '17', brand: stumptownBrand._id }
     ]
 
     await Product.insertMany(products)
@@ -225,11 +223,8 @@ mongodb-mongoose-express-api/server.js
 ```js
 const express = require('express');
 const PORT = process.env.PORT || 3000;
-const db = require("./db/index")
 
 const app = express();
-
-db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);
@@ -272,7 +267,7 @@ node server.js
 Try it in your browser: http://localhost:3000/products
 
 Now I would like to see a specific product.
-Let's say you type http://localhost:3000/products/5e385d110909f66c6404fbc9 then our API should respond with the product where id equals 2. Express let's us do this via the `req.params` object:
+Let's say you type http://localhost:3000/products/5e385d110909f66c6404fbc9 then our API should respond with the product where id equals 5e385d110909f66c6404fbc9. Express let's us do this via the `req.params` object:
 
 ```js
 app.get('/products/:id', async (req, res) => {
@@ -336,7 +331,3 @@ Create the following Express routes for Brands:
 **Success!**
 
 ![](http://www.winsold.com/sites/all/modules/winsold/images/checkmark.svg)
-
-## Feedback
-
-> [Take a minute to give us feedback on this lesson so we can improve it!](https://forms.gle/vgUoXbzxPWf4oPCX6)
